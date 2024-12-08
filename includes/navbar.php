@@ -1,4 +1,4 @@
-<header class="bg-white">
+<header class="bg-gray-100">
     <div class="mx-auto container px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex-1 md:flex md:items-center md:gap-12">
@@ -36,9 +36,8 @@
 
                         <div id="menu__dropdown" class="hidden absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg" role="menu">
                             <div class="p-2">
-                                <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My profile</a>
-                                <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">Billing summary</a>
-                                <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">Team settings</a>
+                                <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Cart</a>
+                                <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Orders</a>
                             </div>
 
                             <div class="p-2">

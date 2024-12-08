@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php include './includes/navbar.php'; ?>
     <main class="container mx-auto">
-        <div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-6 px-4">
+        <div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-6 px-4 my-10 ">
             <div class="max-w-md w-full">
                 <div class="p-8 rounded-2xl bg-white shadow">
                     <h2 class="text-gray-800 text-center text-2xl font-bold">Log in</h2>

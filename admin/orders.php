@@ -13,7 +13,7 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-6">
-        Dashboard Home
+        Orders
     </main>
 </body>
 
