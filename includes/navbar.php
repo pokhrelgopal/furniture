@@ -38,8 +38,19 @@
                             <div class="p-2">
                                 <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Cart</a>
                                 <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Orders</a>
-                            </div>
 
+                            </div>
+                            <?php
+                            if (isset($_SESSION['role']) && $_SESSION['role'] === 'ADMIN') {
+                                echo '
+                                <div class="p-2">
+                                    <a href="/furniture/admin/dashboard.php" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">
+                                        Admin Panel
+                                    </a>
+                                </div>
+                                ';
+                            }
+                            ?>
                             <div class="p-2">
                                 <!-- Logout Button -->
                                 <form method="POST" action="/furniture/logout.php">
