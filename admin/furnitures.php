@@ -55,7 +55,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['username']) || $_SESSION['
         ?>
 
         <!-- Furniture Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-5">
 
             <?php
             // Fetch furniture data from the database
