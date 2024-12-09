@@ -107,9 +107,13 @@
                             $image_url = $row['image_url'] ? "/furniture/uploads/furniture/" . $row['image_url'] : "/furniture/assets/images/placeholder.jpg";
                     ?>
                             <div class="bg-white rounded border border-gray-100 shadow-sm overflow-hidden">
-                                <img src="<?php echo $image_url; ?>" alt="<?php echo $row['name']; ?>" class="w-full h-48 object-cover" />
+                                <a href="/furniture/furniture.php?id=<?php echo $row['id']; ?>">
+                                    <img src="<?php echo $image_url; ?>" alt="<?php echo $row['name']; ?>" class="w-full h-48 object-cover" />
+                                </a>
                                 <div class="p-4">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"> <?php echo $row['category_name']; ?></span>
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                        <?php echo $row['category_name']; ?>
+                                    </span>
 
                                     <h3 class="text-lg font-semibold mb-2"><?php echo $row['name']; ?></h3>
                                     <p class="text-gray-600 mb-2 text-sm truncate">
@@ -118,12 +122,17 @@
                                     <div class="flex justify-between items-center">
                                         <span class="text-md font-semibold">Rs. <?php echo number_format($row['price'], 2); ?></span>
 
-                                        <button type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to Cart</button>
-
+                                        <!-- Add to Cart Form -->
+                                        <form method="POST" action="/furniture/functions/add_to_cart.php" class="inline-block">
+                                            <input type="hidden" name="furniture_id" value="<?php echo $row['id']; ?>" />
+                                            <button type="submit" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                Add to Cart
+                                            </button>
+                                        </form>
                                     </div>
-
                                 </div>
                             </div>
+
                     <?php
                         }
                     } else {

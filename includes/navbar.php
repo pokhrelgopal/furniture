@@ -1,3 +1,27 @@
+<?php
+include 'C:\xampp\htdocs\furniture\includes\db.php'; // Database connection
+
+// Check if user is logged in
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+
+    // Query to get total quantity of items in the cart for the user
+    $cart_query = "SELECT SUM(quantity) AS total_quantity FROM cart WHERE user_id = $user_id";
+    $cart_result = mysqli_query($conn, $cart_query);
+
+    // If the query is successful, fetch the total quantity
+    if ($cart_result) {
+        $cart_data = mysqli_fetch_assoc($cart_result);
+        $total_quantity = $cart_data['total_quantity'] ? $cart_data['total_quantity'] : 0;
+    } else {
+        $total_quantity = 0;
+    }
+} else {
+    $total_quantity = 0;
+}
+?>
+
+
 <header class="bg-gray-100">
     <div class="mx-auto container px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -36,7 +60,9 @@
 
                         <div id="menu__dropdown" class="hidden absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg" role="menu">
                             <div class="p-2">
-                                <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Cart</a>
+                                <a href="/furniture/cart.php" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Cart
+                                    (<?php echo $total_quantity; ?>)
+                                </a>
                                 <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Orders</a>
 
                             </div>
