@@ -43,10 +43,10 @@
                     <!-- Price Range Filter -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
-                        <input type="range" name="price_range" min="0" max="100000" class="w-full" value="<?php echo isset($_GET['price_range']) ? $_GET['price_range'] : 1000; ?>" id="priceRange" />
+                        <input type="range" name="price_range" min="0" max="100000" class="w-full" value="<?php echo isset($_GET['price_range']) ? $_GET['price_range'] : 50000; ?>" id="priceRange" />
                         <div class="flex justify-between items-center text-sm text-gray-600">
                             <span>Rs. 0</span>
-                            <span id="currentValue" class="ml-2"><?php echo isset($_GET['price_range']) ? $_GET['price_range'] : 1000; ?></span>
+                            <span id="currentValue" class="ml-2"><?php echo isset($_GET['price_range']) ? $_GET['price_range'] : 50000; ?></span>
                             <span>Rs. 100000</span>
                         </div>
                     </div>
