@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'C:\xampp\htdocs\furniture\includes\db.php';
-include 'C:\xampp\htdocs\furniture\includes\head.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['username'])) {
@@ -100,6 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_booking'])) {
 
 <head>
     <title>Booking Page</title>
+    <?php
+    include 'C:\xampp\htdocs\furniture\includes\head.php';
+    ?>
+
 </head>
 
 <body>
