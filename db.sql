@@ -71,3 +71,8 @@ CREATE TABLE address (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+ALTER TABLE address 
+ADD COLUMN receiver_name VARCHAR(100) NOT NULL AFTER user_id,
+ADD COLUMN phone_number VARCHAR(15) NOT NULL AFTER receiver_name;

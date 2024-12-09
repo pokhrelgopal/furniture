@@ -73,13 +73,26 @@ if (mysqli_num_rows($result) > 0) {
     <?php include './includes/navbar.php'; ?>
 
     <main class="container mx-auto py-8 px-4">
-        <h2 class="text-2xl font-semibold mb-6">Your Cart</h2>
-
         <div class="flex gap-10">
             <!-- Cart Items -->
             <div class="bg-white shadow p-4 w-full">
                 <?php if (empty($cart_items)): ?>
-                    <p class="text-center text-gray-500">Your cart is empty.</p>
+                    <div class="flex min-h-[400px] flex-col items-center justify-center space-y-4 px-4 text-center">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-semibold tracking-tight">Your cart is empty</h2>
+                        <p class="text-muted-foreground">
+                            Add products while you shop, so they&apos;ll be ready for booking later.
+                        </p>
+                        <button class="mt-4 block rounded bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:scale-105">
+                            <a href="/furniture/furnitures.php">
+                                Start shopping
+                                </Link>
+                        </Button>
+                    </div>
                 <?php else: ?>
                     <div class="space-y-4">
                         <?php foreach ($cart_items as $item): ?>
@@ -93,12 +106,12 @@ if (mysqli_num_rows($result) > 0) {
                                     <!-- Increment and Decrement Buttons -->
                                     <form action="" method="POST" class="flex items-center space-x-2">
                                         <input type="hidden" name="cart_id" value="<?php echo $item['id']; ?>">
-                                        <button type="submit" name="action" value="decrement" class="text-gray-500 text-sm bg-gray-200 p-2 rounded-md hover:bg-gray-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <button type="submit" name="action" value="decrement" class="text-gray-500 text-sm bg-gray-200 p-2 rounded-md hover:bg-gray-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                                             </svg>
                                         </button>
                                         <span class="text-gray-700"><?php echo $item['quantity']; ?></span>
-                                        <button type="submit" name="action" value="increment" class="text-gray-500 text-sm bg-gray-200 p-2 rounded-md hover:bg-gray-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <button type="submit" name="action" value="increment" class="text-gray-500 text-sm bg-gray-200 p-2 rounded-md hover:bg-gray-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                             </svg>
                                         </button>
@@ -118,11 +131,13 @@ if (mysqli_num_rows($result) > 0) {
                         <span class="text-xl font-semibold text-green-600">Rs. <?php echo number_format($total_cost, 2); ?></span>
                     </div>
                     <div class="mt-4">
-                        <button
-                            type="button"
-                            class="block w-full rounded bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:scale-105">
-                            Confirm Booking
-                        </button>
+                        <a href="/furniture/booking.php">
+                            <button
+                                type="button"
+                                class="block w-full rounded bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:scale-105">
+                                Proceed to Booking
+                            </button>
+                        </a>
                     </div>
                 </div>
             <?php endif; ?>

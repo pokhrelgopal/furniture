@@ -63,7 +63,7 @@ if (isset($_SESSION['user_id'])) {
                                 <a href="/furniture/cart.php" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Cart
                                     (<?php echo $total_quantity; ?>)
                                 </a>
-                                <a href="#" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Orders</a>
+                                <a href="/furniture/my-bookings.php" class="block rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-50 hover:text-gray-700" role="menuitem">My Bookings</a>
 
                             </div>
                             <?php

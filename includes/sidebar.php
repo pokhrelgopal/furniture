@@ -13,28 +13,28 @@
 
             <li>
                 <a href="/furniture/admin/dashboard.php"
-                    class="block rounded-lg px-4 py-2 text-sm font-medium 
+                    class="block rounded-lg px-4 py-2 font-medium 
                     <?= $currentRoute === 'dashboard.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Dashboard
                 </a>
             </li>
             <li>
                 <a href="/furniture/admin/furnitures.php"
-                    class="block rounded-lg px-4 py-2 text-sm font-medium 
+                    class="block rounded-lg px-4 py-2 font-medium 
                     <?= $currentRoute === 'furnitures.php' || $currentRoute === 'add-furniture.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Furnitures
                 </a>
             </li>
             <li>
                 <a href="/furniture/admin/orders.php"
-                    class="block rounded-lg px-4 py-2 text-sm font-medium 
+                    class="block rounded-lg px-4 py-2 font-medium 
                     <?= $currentRoute === 'orders.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Orders
                 </a>
             </li>
             <li>
                 <a href="/furniture/admin/users.php"
-                    class="block rounded-lg px-4 py-2 text-sm font-medium 
+                    class="block rounded-lg px-4 py-2 font-medium 
                     <?= $currentRoute === 'users.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Users
                 </a>
