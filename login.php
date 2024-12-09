@@ -4,6 +4,12 @@ include 'includes/db.php';
 
 session_start(); // Start the session to manage user login state
 
+if (isset($_SESSION['username'])) {
+    // If already logged in redirect to the dashboard or home page
+    header('Location: /furniture/index.php');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the username and password from POST request
     $username = trim($_POST['username']);

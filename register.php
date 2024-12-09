@@ -1,6 +1,11 @@
 <?php
 session_start();
 include 'includes/db.php';
+if (isset($_SESSION['username'])) {
+    // If already logged in redirect to the dashboard or home page
+    header('Location: /furniture/index.php');
+    exit;
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
     $username = trim($_POST['username']);

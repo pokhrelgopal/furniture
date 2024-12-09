@@ -53,7 +53,7 @@
                             ?>
                             <div class="p-2">
                                 <!-- Logout Button -->
-                                <form method="POST" action="/furniture/logout.php">
+                                <form method="POST" action="/furniture/functions/logout.php">
                                     <button type="submit" class="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-red-700 hover:bg-red-50" role="menuitem">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
