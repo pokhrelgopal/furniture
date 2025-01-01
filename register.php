@@ -1,28 +1,36 @@
 <?php
 session_start();
 include 'includes/db.php';
+
 if (isset($_SESSION['username'])) {
-    // If already logged in redirect to the dashboard or home page
     header('Location: /furniture/index.php');
     exit;
 }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     $confirm_password = trim($_POST['confirm_password']);
-    $role = isset($_POST['role']) ? $_POST['role'] : 'USER'; // Default to 'USER'
+    $role = isset($_POST['role']) ? $_POST['role'] : 'USER';
 
-    // Validate form data
+    $error = "";
+
+    // Regular expressions
+    $username_pattern = '/^(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_+]+$/';
+    $password_pattern = '/^.{6,}$/';
+
+    // Validation
     if (empty($username) || empty($password) || empty($confirm_password)) {
         $error = "All fields are required.";
+    } elseif (!preg_match($username_pattern, $username)) {
+        $error = "Username must contain at least one letter and cannot consist of only numbers or symbols.";
+    } elseif (!preg_match($password_pattern, $password)) {
+        $error = "Password must be at least 6 characters long.";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match.";
     } else {
-        // Hash the password for security
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Check if the username is already taken
         $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -31,24 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->num_rows > 0) {
             $error = "Username is already taken.";
         } else {
-            // Insert the new user into the database
             $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $username, $hashed_password, $role);
 
             if ($stmt->execute()) {
-                // Redirect to login page after successful registration
                 header("Location: login.php?success=1");
                 exit;
             } else {
                 $error = "Error: Could not register user.";
             }
         }
-
         $stmt->close();
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php include './includes/navbar.php'; ?>
     <main class="container mx-auto">
-        <div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-6 px-4 my-10 ">
+        <div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-6 px-4 my-10">
             <div class="max-w-md w-full">
                 <div class="p-8 rounded-2xl bg-white shadow">
                     <h2 class="text-gray-800 text-center text-2xl font-bold">Create an Account</h2>
