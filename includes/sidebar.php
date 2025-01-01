@@ -1,4 +1,4 @@
-<div class="flex h-screen flex-col justify-between border-e bg-white">
+<div class="flex min-h-screen h-full flex-col justify-between border-e bg-white">
     <div class="px-4 py-6">
         <div class="flex-1 md:flex md:items-center md:gap-12">
             <a class="block text-teal-600 font-bold" href="/furniture/index.php">
@@ -7,46 +7,47 @@
         </div>
         <ul class="mt-6 space-y-1">
             <?php
-            // Get the current route
-            $currentRoute = basename($_SERVER['REQUEST_URI']);
+            // Get the current route (with query string included)
+            $currentRoute = $_SERVER['REQUEST_URI'];
             ?>
 
             <li>
                 <a href="/furniture/admin/dashboard.php"
                     class="block rounded-lg px-4 py-2 font-medium 
-                    <?= $currentRoute === 'dashboard.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
+            <?= strpos($currentRoute, 'dashboard.php') !== false ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Dashboard
                 </a>
             </li>
             <li>
                 <a href="/furniture/admin/furnitures.php"
                     class="block rounded-lg px-4 py-2 font-medium 
-                    <?= $currentRoute === 'furnitures.php' || $currentRoute === 'add-furniture.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
+            <?= strpos($currentRoute, 'furnitures.php') !== false || strpos($currentRoute, 'add-furniture.php') !== false ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Furnitures
                 </a>
             </li>
             <li>
                 <a href="/furniture/admin/categories.php"
                     class="block rounded-lg px-4 py-2 font-medium 
-                    <?= $currentRoute === 'categories.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
+            <?= strpos($currentRoute, 'categories.php') !== false ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Categories
                 </a>
             </li>
             <li>
                 <a href="/furniture/admin/orders.php"
                     class="block rounded-lg px-4 py-2 font-medium 
-                    <?= $currentRoute === 'orders.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
+            <?= strpos($currentRoute, 'orders.php') !== false ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Orders
                 </a>
             </li>
             <li>
                 <a href="/furniture/admin/users.php"
                     class="block rounded-lg px-4 py-2 font-medium 
-                    <?= $currentRoute === 'users.php' ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
+            <?= strpos($currentRoute, 'users.php') !== false ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'; ?>">
                     Users
                 </a>
             </li>
         </ul>
+
     </div>
 
     <div class="sticky inset-x-0 bottom-0 border-t border-gray-100">

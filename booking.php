@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_booking'])) {
             $message_type = "success";
         } catch (\Throwable $th) {
             $conn->rollback();
-            $message = "Booking failed: " . $e->getMessage();
+            $message = "Booking failed: " . $th->getMessage();
             $message_type = "danger";
         }
     }
@@ -102,7 +102,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_booking'])) {
     <?php
     include 'C:\xampp\htdocs\furniture\includes\head.php';
     ?>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
 
+        .error {
+            border-color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -116,34 +126,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_booking'])) {
         <?php endif; ?>
         <div class="w-full flex gap-5">
             <!-- Address Form -->
+
             <div class="w-1/2 bg-white shadow rounded p-6">
                 <h2 class="text-lg font-semibold mb-4">Enter Address</h2>
-                <form method="POST">
+                <form id="bookingForm" method="POST" class="w-full" novalidate>
                     <div class="mb-4">
                         <label for="receiver_name" class="block text-sm font-medium">Receiver Name</label>
-                        <input type="text" id="receiver_name" name="receiver_name" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm" required>
+                        <input type="text" id="receiver_name" name="receiver_name" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm">
+                        <p id="receiverNameError" class="error-message"></p>
                     </div>
                     <div class="mb-4">
                         <label for="phone_number" class="block text-sm font-medium">Phone Number</label>
-                        <input type="text" id="phone_number" name="phone_number" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm" required>
+                        <input type="text" id="phone_number" name="phone_number" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm">
+                        <p id="phoneNumberError" class="error-message"></p>
                     </div>
                     <div class="mb-4">
                         <label for="address_line" class="block text-sm font-medium">Address Line</label>
-                        <input type="text" id="address_line" name="address_line" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm" required>
+                        <input type="text" id="address_line" name="address_line" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm">
+                        <p id="addressLineError" class="error-message"></p>
                     </div>
                     <div class="mb-4">
                         <label for="city" class="block text-sm font-medium">City</label>
-                        <input type="text" id="city" name="city" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm" required>
+                        <input type="text" id="city" name="city" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm">
+                        <p id="cityError" class="error-message"></p>
                     </div>
                     <div class="mb-4">
                         <label for="state" class="block text-sm font-medium">State</label>
-                        <input type="text" id="state" name="state" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm" required>
+                        <input type="text" id="state" name="state" class="block w-full rounded border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 text-sm">
+                        <p id="stateError" class="error-message"></p>
                     </div>
                     <button type="submit" name="confirm_booking" class="block rounded bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:scale-105">
                         Confirm Booking
                     </button>
                 </form>
             </div>
+
 
             <!-- Cart Items -->
             <div class="w-1/2 h-fit bg-white shadow rounded p-6 ml-4">
@@ -189,7 +206,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_booking'])) {
                 </div>
             </div>
         </div>
+        <script>
+            const form = document.getElementById('bookingForm');
+
+            form.addEventListener('submit', function(event) {
+                let isValid = true;
+
+                // Receiver Name validation
+                const receiverName = document.getElementById('receiver_name');
+                const receiverNameError = document.getElementById('receiverNameError');
+                if (!/^[A-Za-z\s]+$/.test(receiverName.value.trim())) {
+                    isValid = false;
+                    receiverNameError.textContent = 'Name should only contain alphabets.';
+                    receiverName.classList.add('error');
+                } else {
+                    receiverNameError.textContent = '';
+                    receiverName.classList.remove('error');
+                }
+
+                // Phone Number validation
+                const phoneNumber = document.getElementById('phone_number');
+                const phoneNumberError = document.getElementById('phoneNumberError');
+                if (!/^9\d{9}$/.test(phoneNumber.value.trim())) {
+                    isValid = false;
+                    phoneNumberError.textContent = 'Phone number must be 10 digits starting with 9.';
+                    phoneNumber.classList.add('error');
+                } else {
+                    phoneNumberError.textContent = '';
+                    phoneNumber.classList.remove('error');
+                }
+
+                // Address Line validation
+                const addressLine = document.getElementById('address_line');
+                const addressLineError = document.getElementById('addressLineError');
+                if (!/[A-Za-z0-9]+/.test(addressLine.value.trim())) {
+                    isValid = false;
+                    addressLineError.textContent = 'Address cannot contain only numbers or symbols.';
+                    addressLine.classList.add('error');
+                } else {
+                    addressLineError.textContent = '';
+                    addressLine.classList.remove('error');
+                }
+
+                // City validation
+                const city = document.getElementById('city');
+                const cityError = document.getElementById('cityError');
+                if (!/^[A-Za-z\s]+$/.test(city.value.trim())) {
+                    isValid = false;
+                    cityError.textContent = 'City should only contain alphabets.';
+                    city.classList.add('error');
+                } else {
+                    cityError.textContent = '';
+                    city.classList.remove('error');
+                }
+
+                // State validation
+                const state = document.getElementById('state');
+                const stateError = document.getElementById('stateError');
+                if (!/^[A-Za-z\s]+$/.test(state.value.trim())) {
+                    isValid = false;
+                    stateError.textContent = 'State should only contain alphabets.';
+                    state.classList.add('error');
+                } else {
+                    stateError.textContent = '';
+                    state.classList.remove('error');
+                }
+
+                // Prevent form submission if invalid
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        </script>
     </main>
+
 </body>
 
 </html>

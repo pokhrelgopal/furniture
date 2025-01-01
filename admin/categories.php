@@ -17,37 +17,49 @@ $message_type = "";
 
 // Handle category addition
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
-    $category_name = $_POST['name'];
+    $category_name = trim($_POST['name']);
 
-    // Check if category already exists
-    $check_query = "SELECT id FROM category WHERE name = ?";
-    $stmt = $conn->prepare($check_query);
-    $stmt->bind_param("s", $category_name);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        // Error message if category already exists
-        $error_message = "Category already exists.";
+    // Validate category name
+    if (empty($category_name)) {
+        $error_message = "Category name cannot be empty.";
+        $message_type = "error";
+    } elseif (!preg_match("/^[a-zA-Z ]+$/", $category_name)) {
+        $error_message = "Category name must only contain alphabets.";
+        $message_type = "error";
+    } elseif (strlen($category_name) > 100) {
+        $error_message = "Category name cannot exceed 100 characters.";
         $message_type = "error";
     } else {
-        // Prepare and execute the insert query
-        $query = "INSERT INTO category (name) VALUES (?)";  // Removed description column from query
-        $stmt = $conn->prepare($query);
+        // Check if category already exists
+        $check_query = "SELECT id FROM category WHERE name = ?";
+        $stmt = $conn->prepare($check_query);
         $stmt->bind_param("s", $category_name);
+        $stmt->execute();
+        $stmt->store_result();
 
-        if ($stmt->execute()) {
-            // Success message if query is successful
-            $error_message = "Category added successfully!";
-            $message_type = "success";
-        } else {
-            // Error message if query fails
-            $error_message = "Failed to add category.";
+        if ($stmt->num_rows > 0) {
+            // Error message if category already exists
+            $error_message = "Category already exists.";
             $message_type = "error";
-        }
-    }
+        } else {
+            // Prepare and execute the insert query
+            $query = "INSERT INTO category (name) VALUES (?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("s", $category_name);
 
-    $stmt->close();
+            if ($stmt->execute()) {
+                // Success message if query is successful
+                $error_message = "Category added successfully!";
+                $message_type = "success";
+            } else {
+                // Error message if query fails
+                $error_message = "Failed to add category.";
+                $message_type = "error";
+            }
+        }
+
+        $stmt->close();
+    }
 }
 
 // Handle category deletion with POST
@@ -73,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category_id'])
 }
 
 // Query to fetch all categories
-$query = "SELECT id, name, created_at FROM category ORDER BY created_at DESC"; // Removed description column from query
+$query = "SELECT id, name, created_at FROM category ORDER BY created_at DESC";
 $result = $conn->query($query);
 ?>
 
@@ -124,8 +136,8 @@ $result = $conn->query($query);
                         <tr>
                             <td class="border px-4 py-2"><?php echo htmlspecialchars($row['name']); ?></td>
                             <td class="border px-4 py-2">
-                                <!-- Delete Button (inside a form) -->
-                                <form action="categories.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                <!-- Delete Button (direct delete without confirmation) -->
+                                <form action="categories.php" method="POST">
                                     <input type="hidden" name="delete_category_id" value="<?php echo $row['id']; ?>">
                                     <button type="submit" class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
                                         Delete

@@ -35,6 +35,28 @@ $result = $stmt->get_result();
 
 <head>
     <?php include 'C:\xampp\htdocs\furniture\includes\head.php'; ?>
+    <style>
+        .status-pending {
+            color: orange;
+        }
+
+        .status-confirmed {
+            color: blue;
+        }
+
+        .status-shipped {
+            color: purple;
+        }
+
+        .status-delivered {
+            color: green;
+        }
+
+        .status-cancelled {
+            color: red;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -65,7 +87,32 @@ $result = $stmt->get_result();
                             <td class="border px-4 py-2"><?php echo htmlspecialchars($row['furniture_name']); ?></td>
                             <td class="border px-4 py-2"><?php echo htmlspecialchars($row['quantity']); ?></td>
                             <td class="border px-4 py-2"><?php echo "$" . number_format($row['price'], 2); ?></td>
-                            <td class="border px-4 py-2"><?php echo htmlspecialchars($row['status']); ?></td>
+                            <td class="border px-4 py-2">
+                                <?php
+                                $status = htmlspecialchars($row['status']);
+                                $status_class = '';
+
+                                switch ($status) {
+                                    case 'Pending':
+                                        $status_class = 'status-pending';
+                                        break;
+                                    case 'Confirmed':
+                                        $status_class = 'status-confirmed';
+                                        break;
+                                    case 'Shipped':
+                                        $status_class = 'status-shipped';
+                                        break;
+                                    case 'Delivered':
+                                        $status_class = 'status-delivered';
+                                        break;
+                                    case 'Cancelled':
+                                        $status_class = 'status-cancelled';
+                                        break;
+                                }
+                                ?>
+                                <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+                            </td>
+
                             <td class="border px-4 py-2"><?php echo date("Y-m-d H:i:s", strtotime($row['created_at'])); ?></td>
                         </tr>
                     <?php endwhile; ?>
